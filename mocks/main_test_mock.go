@@ -10,6 +10,7 @@
 package mock_main_test
 
 import (
+	context "context"
 	reflect "reflect"
 
 	sqs "github.com/aws/aws-sdk-go-v2/service/sqs"
@@ -37,6 +38,26 @@ func NewMockClient_Interface(ctrl *gomock.Controller) *MockClient_Interface {
 // EXPECT returns an object that allows the caller to indicate expected use.
 func (m *MockClient_Interface) EXPECT() *MockClient_InterfaceMockRecorder {
 	return m.recorder
+}
+
+// ReceiveMessage mocks base method.
+func (m *MockClient_Interface) ReceiveMessage(ctx context.Context, params *sqs.ReceiveMessageInput, optFns ...func(*sqs.Options)) (*sqs.ReceiveMessageOutput, error) {
+	m.ctrl.T.Helper()
+	varargs := []any{ctx, params}
+	for _, a := range optFns {
+		varargs = append(varargs, a)
+	}
+	ret := m.ctrl.Call(m, "ReceiveMessage", varargs...)
+	ret0, _ := ret[0].(*sqs.ReceiveMessageOutput)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// ReceiveMessage indicates an expected call of ReceiveMessage.
+func (mr *MockClient_InterfaceMockRecorder) ReceiveMessage(ctx, params any, optFns ...any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	varargs := append([]any{ctx, params}, optFns...)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "ReceiveMessage", reflect.TypeOf((*MockClient_Interface)(nil).ReceiveMessage), varargs...)
 }
 
 // RetrieveSqsMessage mocks base method.
